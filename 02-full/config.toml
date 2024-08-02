@@ -1,0 +1,15 @@
+[customizations.installer.kickstart]
+contents = """
+lang en_GB.UTF-8
+keyboard uk
+timezone CET
+
+user --name achilleas --password password42 --plaintext --groups wheel
+sshkey --username achilleas "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPqEtsCdSozq0DT8sOazpizsBP65Ni6SMqrQA85Wnfs1 achilleas"
+rootpw --lock
+
+zerombr
+clearpart --all --initlabel
+autopart --type=plain
+reboot --eject
+"""

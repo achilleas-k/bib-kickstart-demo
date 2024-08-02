@@ -32,3 +32,25 @@ timezone CET
 This kickstart is missing two important configurations for a fully automated installation:
 - Partitioning
 - User creation
+
+## Part 2: Fully unattended kickstart file
+
+Let's fully automate the installation by adding user creation and partition instructions.
+
+```toml
+[customizations.installer.kickstart]
+contents = """
+lang en_GB.UTF-8
+keyboard uk
+timezone CET
+
+user --name achilleas --password password42 --plaintext --groups wheel
+sshkey --username achilleas "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPqEtsCdSozq0DT8sOazpizsBP65Ni6SMqrQA85Wnfs1 achilleas"
+rootpw --lock
+
+zerombr
+clearpart --all --initlabel
+autopart --type=plain
+reboot --eject
+"""
+```
