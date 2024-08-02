@@ -75,3 +75,9 @@ autopart --type=plain
 reboot --eject
 """
 ```
+
+# Notes
+
+- Use the `./build.sh` script with a config directory (e.g. `./build.sh ./01-partial`) to build a specific configuration.  The output will be under the config directory.
+- Use the `./boot.sh` script with a config directory (e.g. `./boot.sh ./01-partial`) to create a disk image and boot the ISO for that config.
+- Use the `./catks.sh` script with a config directory (e.g. `./catks.sh ./01-partial`) to mount the ISO for that ocnfig and print the embedded kickstart files.
