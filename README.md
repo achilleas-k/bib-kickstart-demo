@@ -17,6 +17,8 @@ This feature should be available in the upstream (`centos-bootc`) image soon.
 
 ## Part 1: Partial kickstart file
 
+Source: [`01-partial`](01-partial)
+
 We'll make an ISO with a kickstart file that takes care of locales etc but is not enough for a fully automated installation.  Some interaction will be required.
 
 
@@ -49,6 +51,8 @@ ostreecontainer --url=/run/install/repo/container --transport=oci --no-signature
 ```
 
 ## Part 2: Fully unattended kickstart file
+
+Source: [`02-full`](02-full)
 
 Let's fully automate the installation by adding user creation and partition instructions.
 
@@ -95,6 +99,8 @@ ostreecontainer --url=/run/install/repo/container --transport=oci --no-signature
 ```
 
 ## Part 3: Fully unattended kickstart file without user
+
+Source: [`03-full-no-user`](03-full-no-user)
 
 This configuration is also fully automated, but doesn't create a user.  The Anaconda users module will not allow an installation to continue if there is no admin user (or root password).  If our base image contains a user already, or if we plan to provision a user later using, for example, cloud-init or similar, then we need to disable the users module so we can perform a fully unattended installation.
 
