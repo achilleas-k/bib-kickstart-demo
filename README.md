@@ -33,6 +33,21 @@ This kickstart is missing two important configurations for a fully automated ins
 - Partitioning
 - User creation
 
+The ISO should contain two kickstart files with the following contents:
+
+`osbuild.ks`
+```
+%include /run/install/repo/osbuild-base.ks
+lang en_GB.UTF-8
+keyboard uk
+timezone CET
+```
+
+`osbuild-base.ks`
+```
+ostreecontainer --url=/run/install/repo/container --transport=oci --no-signature-verification
+```
+
 ## Part 2: Fully unattended kickstart file
 
 Let's fully automate the installation by adding user creation and partition instructions.
@@ -55,6 +70,30 @@ reboot --eject
 """
 ```
 
+The ISO should contain two kickstart files with the following contents:
+
+`osbuild.ks`
+```
+%include /run/install/repo/osbuild-base.ks
+lang en_GB.UTF-8
+keyboard uk
+timezone CET
+
+user --name achilleas --password password42 --plaintext --groups wheel
+sshkey --username achilleas "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPqEtsCdSozq0DT8sOazpizsBP65Ni6SMqrQA85Wnfs1 achilleas"
+rootpw --lock
+
+zerombr
+clearpart --all --initlabel
+autopart --type=plain
+reboot --eject
+```
+
+`osbuild-base.ks`
+```
+ostreecontainer --url=/run/install/repo/container --transport=oci --no-signature-verification
+```
+
 ## Part 3: Fully unattended kickstart file without user
 
 This configuration is also fully automated, but doesn't create a user.  The Anaconda users module will not allow an installation to continue if there is no admin user (or root password).  If our base image contains a user already, or if we plan to provision a user later using, for example, cloud-init or similar, then we need to disable the users module so we can perform a fully unattended installation.
@@ -74,6 +113,26 @@ clearpart --all --initlabel
 autopart --type=plain
 reboot --eject
 """
+```
+
+The ISO should contain two kickstart files with the following contents:
+
+`osbuild.ks`
+```
+%include /run/install/repo/osbuild-base.ks
+lang en_GB.UTF-8
+keyboard uk
+timezone CET
+
+zerombr
+clearpart --all --initlabel
+autopart --type=plain
+reboot --eject
+```
+
+`osbuild-base.ks`
+```
+ostreecontainer --url=/run/install/repo/container --transport=oci --no-signature-verification
 ```
 
 # Notes
